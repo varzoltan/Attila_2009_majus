@@ -61,6 +61,57 @@ namespace Attila_2009_majus
                 }
             }
             Console.WriteLine($"A legalacsonyabb soszámú emelet: {Math.Min(minszint,lift_kezdet)}, a legmagasabb szint: {Math.Max(maxszint,lift_kezdet)}");
+
+            //5.feladat
+            Console.WriteLine("\n5.feladat");
+            int utasnelkul = 0, utassal = 0;
+            for (int i=0;i<lista.Count()-1;i++)
+            {
+                if (lista[i].celszint < lista[i+1].induloszint)//utasnelkuél
+                {
+                    utasnelkul++;
+                }
+                if (lista[i].induloszint < lista[i].celszint)//utassal
+                {
+                    utassal++;
+                }
+            }
+            if (lista.Last().induloszint < lista.Last().celszint)
+            {
+                utassal++;
+            }
+            if (lift_kezdet < lista.First().induloszint)
+            {
+                utasnelkul++;
+            }
+            Console.WriteLine($"Felefelé a lift utassal: {utassal}, utasnélkül: {utasnelkul}.");
+
+            //6.feladat
+            Console.WriteLine("\n6.feladat\n");
+            int csapatokszama = int.Parse(File.ReadLines("igeny.txt").ElementAt(1));
+            for (int i = 1;i<=csapatokszama;i++)
+            {
+                bool volt = true;//Villanykapcsolós módszer.
+                /*foreach(var j in lista)
+                {
+                    if (i == j.csapatszam)
+                    {
+                        volt = false;
+                    }
+                }*/
+                for (int j = 0;j<lista.Count();j++)
+                {
+                    if (i == lista[j].csapatszam)
+                    {
+                        volt = false;
+                    }
+                }
+                if (volt)
+                {
+                    Console.Write($"{i} ");
+                }
+            }
+            //Console.WriteLine($"{csapatokszama}");
             Console.ReadKey();
         }
     }
