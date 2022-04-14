@@ -87,7 +87,7 @@ namespace Attila_2009_majus
             Console.WriteLine($"Felefelé a lift utassal: {utassal}, utasnélkül: {utasnelkul}.");
 
             //6.feladat
-            Console.WriteLine("\n6.feladat\n");
+            Console.WriteLine("\n6.feladat");
             int csapatokszama = int.Parse(File.ReadLines("igeny.txt").ElementAt(1));
             for (int i = 1;i<=csapatokszama;i++)
             {
@@ -111,7 +111,54 @@ namespace Attila_2009_majus
                     Console.Write($"{i} ");
                 }
             }
-            //Console.WriteLine($"{csapatokszama}");
+            //7.feladat
+            Console.WriteLine("\n\n7.feladat");
+            Random veletlen = new Random();
+            int veltelen_csapat = veletlen.Next(1,csapatokszama+1);
+            Console.WriteLine($"{veltelen_csapat}");
+            var csapatszam = lista.Where(x => x.csapatszam == veltelen_csapat);
+            bool igaz = true;
+            for(int i = 0;i<csapatszam.Count()-1;i++)
+            {
+                if (csapatszam.ElementAt(i).celszint != csapatszam.ElementAt(i+1).induloszint)
+                {
+                    Console.WriteLine($"A {veltelen_csapat} csapat a(z) {csapatszam.ElementAt(i).celszint}-ről gyalog ment a {csapatszam.ElementAt(i + 1).induloszint}-re.");
+                    igaz = false;
+                }
+            }
+            if (igaz)
+            {
+                Console.WriteLine("Nem bizonyítható szabálytalanság");
+            }
+
+            //8.feladat
+            Console.WriteLine("\n8.feladat");
+            StreamWriter ir = new StreamWriter("blokkol.txt");
+            if (csapatszam.Count()==0)
+            {
+                Console.WriteLine($"{veltelen_csapat} csapat a megfigyelt időszakban nem szerepelt!");
+            }
+            else
+            {
+                for (int i = 0; i < csapatszam.Count(); i++)
+                {
+                    Console.WriteLine($"Indulási emelet: {csapatszam.ElementAt(i).induloszint}");
+                    ir.WriteLine($"Indulási emelet: {csapatszam.ElementAt(i).induloszint}");
+                    Console.WriteLine($"Célemelet: {csapatszam.ElementAt(i).celszint}");
+                    ir.WriteLine($"Célemelet: {csapatszam.ElementAt(i).celszint}");
+                    Console.Write($"Feladatkód: ");
+                    string feladatkod = Console.ReadLine();
+                    ir.WriteLine($"Feladatkód: " + feladatkod);
+                    Console.WriteLine($"Befejezés ideje: {csapatszam.ElementAt(i).ora}:{csapatszam.ElementAt(i).perc}:{csapatszam.ElementAt(i).masodperc}");
+                    ir.WriteLine($"Befejezés ideje: {csapatszam.ElementAt(i).ora}:{csapatszam.ElementAt(i).perc}:{csapatszam.ElementAt(i).masodperc}");
+                    Console.Write($"Sikeresség: ");
+                    string sikeresseg = Console.ReadLine();
+                    ir.WriteLine("Sikeresség: " + sikeresseg);
+                    Console.WriteLine("-----");
+                    ir.WriteLine("-----");
+                }
+                ir.Close();
+            }            
             Console.ReadKey();
         }
     }
